@@ -1,38 +1,35 @@
 import java.sql.*;
 import java.util.Scanner;
 
-public class LoginClientes {
-    // Variáveis de conexão (fora do método, para uso em todo o código)
-    String url = "jdbc:mysql://localhost:3306/login_clientes?useSSL=false&serverTimezone=UTC";
-    String USER = "root";
-    String PASSWORD = "1234";
+public class Produtos extends LoginClientes {
 
-    public static void cadastrarCliente(Scanner scanner) {
-       System.out.print("Digite o nome: ");
-        String nome = scanner.nextLine();
-        System.out.print("Digite o email: ");
-        String email = scanner.nextLine();
-        System.out.print("Digite a senha: ");
-        String senha = scanner.nextLine();
 
-        String sql = "INSERT INTO cliente (nome, email, senha) VALUES (?, ?, ?)";
+    public static void cadastrarProduto(Scanner scanner) {
+       System.out.print("Produto: ");
+        String nome_produto = scanner.nextLine();
+        System.out.print("Marca: ");
+        String marca_produtp = scanner.nextLine();
+        System.out.print("Quantidade: ");
+        String quantidade_produto = scanner.nextLine();
+
+        String sql = "INSERT INTO cliente (nome_produto, marca, quantidade) VALUES (?, ?, ?)";
 
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/login_clientes?useSSL=false&serverTimezone=UTC", "root", "1234");
-            PreparedStatement stmt = conn.prepareStatement(sql)){
-            stmt.setString(1, nome);
-            stmt.setString(2, email);
-            stmt.setString(3, senha);
+             PreparedStatement stmt = conn.prepareStatement(sql)){
+            stmt.setString(1, nome_produto);
+            stmt.setString(2, marca_produtp);
+            stmt.setString(3, quantidade_produto);
 
             stmt.executeUpdate();
-            System.out.println("Cliente cadastrado com sucesso!");
+            System.out.println("Prudo " + nome_produto + " cadastrado!");
         }catch (SQLIntegrityConstraintViolationException e){
-            System.out.println("Erro: Este email já está cadastrado!");
+            System.out.println("Erro: " + nome_produto + " não Cadastrado!");
         }catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public static void excluirCliente(Scanner scanner) throws SQLException {
+    public static void excluirProdutos(Scanner scanner) throws SQLException {
         System.out.print("Digite o nome: ");
         String nome = scanner.nextLine();
         System.out.print("Digite o email: ");
@@ -57,7 +54,7 @@ public class LoginClientes {
         }
     }
 
-    static void fazerLogin(Scanner scanner){
+    static void listarProdutos(Scanner scanner){
         System.out.print("Digite o email: ");
         String email = scanner.nextLine();
         System.out.print("Digite a senha: ");
@@ -81,4 +78,5 @@ public class LoginClientes {
             e.printStackTrace();
         }
     }
+
 }
