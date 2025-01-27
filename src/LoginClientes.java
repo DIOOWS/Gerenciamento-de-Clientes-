@@ -1,6 +1,8 @@
 import java.sql.*;
 import java.util.Scanner;
 
+import static java.awt.SystemColor.menu;
+
 public class LoginClientes {
     // Variáveis de conexão (fora do método, para uso em todo o código)
     String url = "jdbc:mysql://localhost:3306/login_clientes?useSSL=false&serverTimezone=UTC";
@@ -57,7 +59,7 @@ public class LoginClientes {
         }
     }
 
-    static void fazerLogin(Scanner scanner){
+    static int fazerLogin(Scanner scanner){
         System.out.print("Digite o email: ");
         String email = scanner.nextLine();
         System.out.print("Digite a senha: ");
@@ -73,12 +75,18 @@ public class LoginClientes {
             ResultSet rs = stmt.executeQuery();
 
         if (rs.next()){
-            System.out.println("Login bem-sucedido! Bem-vindo, " + rs.getString("nome") + "!");
+            int clienteId = rs.getInt("id");
+            String nomeCliente = rs.getString("nome");
+            System.out.println("Login bem-sucedido! Bem-vindo: " + nomeCliente);
+            MenuProdutos.menuCadstroProdutos(clienteId, scanner);
+            return clienteId; // Retorna o ID do cliente logado
         }else {
             System.out.println("Email ou senha inválidos. Tente novamente.");
+            return -1; // Indica login falhou
             }
         }catch (SQLException e){
             e.printStackTrace();
+            return -1; // Indica erro no login
         }
     }
 }
