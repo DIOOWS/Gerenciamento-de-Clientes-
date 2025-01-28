@@ -1,14 +1,8 @@
 import java.sql.*;
 import java.util.Scanner;
-
-import static java.awt.SystemColor.menu;
-
+import utils.BancoDeDados;
 public class LoginClientes {
-    // Variáveis de conexão (fora do método, para uso em todo o código)
-    String url = "jdbc:mysql://localhost:3306/login_clientes?useSSL=false&serverTimezone=UTC";
-    String USER = "root";
-    String PASSWORD = "1234";
-
+    BancoDeDados bancoDeDados;
     public static void cadastrarCliente(Scanner scanner) {
        System.out.print("Digite o nome: ");
         String nome = scanner.nextLine();
@@ -78,7 +72,8 @@ public class LoginClientes {
             int clienteId = rs.getInt("id");
             String nomeCliente = rs.getString("nome");
             System.out.println("Login bem-sucedido! Bem-vindo: " + nomeCliente);
-            MenuProdutos.menuCadstroProdutos(clienteId, scanner);
+            Menu menu = new Menu();
+            menu.menuProdutos(clienteId, scanner);
             return clienteId; // Retorna o ID do cliente logado
         }else {
             System.out.println("Email ou senha inválidos. Tente novamente.");

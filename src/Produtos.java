@@ -1,13 +1,9 @@
 import java.sql.*;
 import java.util.Scanner;
+import utils.BancoDeDados;
 
 public class Produtos extends LoginClientes {
-
-    // Variáveis de conexão (fora do método, para uso em todo o código)
-    String url = "jdbc:mysql://localhost:3306/produtos?useSSL=false&serverTimezone=UTC";
-    String USER = "root";
-    String PASSWORD = "1234";
-
+    BancoDeDados bancoDeDados;
 
     public static void cadastrarProduto(Scanner scanner, int clienteId) {
         System.out.print("Produto: ");
@@ -117,9 +113,8 @@ public class Produtos extends LoginClientes {
                 System.out.println("Nenhum produto encontrado para este cliente.");
             }
         } else {
-            System.out.println("Cliente não encontrado.");
+            System.out.println("Produto não encontrado");
         }
-
     } catch (SQLException e) {
         e.printStackTrace();
     }
